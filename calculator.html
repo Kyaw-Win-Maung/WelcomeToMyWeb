@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('engineerbg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: relative;
+        }
+
+        #formContainer {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        select, input[type="radio"] {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        /* Styling for regular buttons like "Next" and "Back to Form" */
+        .action-button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%; /* Full width buttons */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for the "Back to Home" button at the top-right */
+        #backToHome {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 8px 15px; /* Smaller padding for a smaller button */
+            font-size: 14px; /* Smaller text */
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block; /* Ensure it's not taking full width */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: small shadow for better visibility */
+        }
+
+        #backToHome:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for the job summary container */
+        #jobSummary {
+            margin-top: 20px;
+            display: none; /* Hidden initially */
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #jobSummary h3 {
+            margin-bottom: 20px;
+        }
+
+        #jobSummary p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Home button at the top-right -->
+    <button id="backToHome" onclick="goToHome()">Back to Home</button>
+
+    <div id="formContainer">
+        <h2>Select Your Job Details</h2>
+
+        <!-- Job Selection Form -->
+        <form id="jobForm">
+            <label for="service">Choose Service:</label>
+            <select id="service">
+                <option value="Digital Marketing">Digital Marketing Specialist</option>
+                <option value="Web Development">Web Developer</option>
+                <option value="Graphic Designer">Graphic Designer</option>
+                <option value="Structural Designer">Structural Designer</option>
+                <option value="Construction Site Engineer">Construction Site Engineer</option>
+                <option value="Contract">Contractor for construction sites</option>
+                <option value="QC/QA">QC/QA</option>
+                <option value="QS">QS</option>
+            </select>
+
+            <label for="jobType">Job Type:</label>
+            <select id="jobType">
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Remote">Remote</option>
+            </select>
+
+            <label for="location">Choose Location:</label>
+            <select id="location">
+                <option value="Singapore">Singapore</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Myanmar">Myanmar</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <!-- Next button with a unique class -->
+            <button type="button" class="action-button" onclick="showSummary()">Next</button>
+        </form>
+
+        <!-- Job Summary (Initially Hidden) -->
+        <div id="jobSummary">
+            <h3>Job Summary</h3>
+            <p><strong>Service:</strong> <span id="summaryService"></span></p>
+            <p><strong>Job Type:</strong> <span id="summaryJobType"></span></p>
+            <p><strong>Location:</strong> <span id="summaryLocation"></span></p>
+            <p><strong>Salary:</strong> <span id="summarySalary"></span></p>
+
+            <!-- Back to form button with a unique class -->
+            <button type="button" class="action-button" onclick="goBack()">Back to Form</button>
+        </div>
+        <p><b>Note: </b>For the project base payment, please <a href="mailto:oskarklein772@gmail.com" style="color: yellow;">contact to me</a>  directly!</p>
+    </div>
+    
+
+    <script>
+        function showSummary() {
+            // Get selected values from the form
+            const service = document.getElementById('service').value;
+            const jobType = document.getElementById('jobType').value;
+            const location = document.getElementById('location').value;
+
+            // Determine salary based on selections
+            let salary = '';
+            if (jobType === "Remote") {
+                salary = "25,000 BHT/month, 850 BHT/day, 40 BHT/hour";
+            } else if (jobType === "Full Time") {
+                if (location === "Singapore") {
+                    salary = "2,600 SGD/month";
+                } else if (location === "Thailand") {
+                    salary = "25,000 BHT/month";
+                } else if (location === "Myanmar") {
+                    salary = "6,000,000 Kyat/month";
+                } else {
+                    salary = "Contact me.";
+                }
+            } else if (jobType === "Part Time") {
+                salary = "Custom salary for part-time work.";
+            }
+
+            // Special case for "Structural Designer" and "Singapore"
+           
+            // Fill the job summary with selected values
+            document.getElementById('summaryService').textContent = service;
+            document.getElementById('summaryJobType').textContent = jobType;
+            document.getElementById('summaryLocation').textContent = location;
+            document.getElementById('summarySalary').textContent = salary;
+
+            // Show the job summary section
+            document.getElementById('jobSummary').style.display = 'block';
+        }
+
+        function goBack() {
+            // Reset the form and hide the summary
+            document.getElementById('jobForm').reset();
+            document.getElementById('jobSummary').style.display = 'none';
+        }
+
+        // Redirect to the home page
+        function goToHome() {
+            window.location.href = 'index.html'; // Replace 'index.html' with your homepage URL if needed
+        }
+    </script>
+</body>
+</html>
